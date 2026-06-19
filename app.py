@@ -9,15 +9,12 @@ from google.cloud import vision
 from google.cloud import translate_v2 as translate
 from google.cloud import storage
 
-# ==========================================
-# UI CONFIGURATION: True Color (RGB) Scale
-# ==========================================
 class Colors:
-    HEADER = '\033[38;2;167;139;250m'    # Soft Purple
-    SYSTEM = '\033[38;2;96;165;250m'     # Bright Blue
-    ORIGINAL = '\033[38;2;251;146;60m'   # Warm Orange
-    TRANSLATED = '\033[38;2;52;211;153m' # Mint Green
-    ERROR = '\033[38;2;248;113;113m'     # Soft Red
+    HEADER = '\033[38;2;167;139;250m'    
+    SYSTEM = '\033[38;2;96;165;250m'     
+    ORIGINAL = '\033[38;2;251;146;60m'   
+    TRANSLATED = '\033[38;2;52;211;153m' 
+    ERROR = '\033[38;2;248;113;113m'     
     BOLD = '\033[1m'
     ENDC = '\033[0m'
 
@@ -89,6 +86,12 @@ def main():
 
         filename = os.path.basename(urlparse(gcs_uri).path)
         should_flip = (mode != "straight")
+
+        # Validation Guard: Check file extension compatibility
+        allowed_extensions = ('.jpg', '.jpeg', '.png', '.webp')
+        if not filename.lower().endswith(allowed_extensions):
+            print(f"\n{Colors.ERROR}[!] File '{filename}' is not a supported image format. Skipping.{Colors.ENDC}")
+            continue
 
         print_header(filename, should_flip, index, total_images)
 
