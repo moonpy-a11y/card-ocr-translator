@@ -5,3 +5,4 @@
 - Update step 5: Refactored system context for i18n.
 - Update step 6: Refactored system context for logging.
 - Update step 7: Refactored system context for ui.
+- Update step 8: Refactored system context for logging.
