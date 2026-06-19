@@ -24,3 +24,4 @@
 - Update step 24: Refactored system context for logging.
 - Update step 25: Refactored system context for config.
 - Update step 26: Refactored system context for cli.
+- Update step 27: Refactored system context for cli.
