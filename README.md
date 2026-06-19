@@ -12,3 +12,6 @@ Digitizes and translates mirrored paper-based study cards. Corrects front-facing
 
 ## © Copyright & Licensing
 Created and maintained by **moonpy-a11y**. Released under the MIT License. Portions of the API interactions rely on Google Cloud Client Libraries (Licensed under Apache 2.0 by Google LLC).
+
+## 💻 Application Output
+![Console Output](console-output.png)
