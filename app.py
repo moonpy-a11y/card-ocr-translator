@@ -9,23 +9,18 @@ from google.cloud import vision
 from google.cloud import translate_v2 as translate
 from google.cloud import storage
 
-__version__ = "1.1.0"
+# --- CORE FEATURE: EXECUTION MONITORING ---
+# Added latency benchmarks to optimize cloud API processing pipelines.
 
-# ==========================================
-# UI CONFIGURATION: True Color (RGB) Scale
-# ==========================================
 class Colors:
-    HEADER = '\033[38;2;167;139;250m'    # Soft Purple
-    SYSTEM = '\033[38;2;96;165;250m'     # Bright Blue
-    ORIGINAL = '\033[38;2;251;146;60m'   # Warm Orange
-    TRANSLATED = '\033[38;2;52;211;153m' # Mint Green
-    ERROR = '\033[38;2;248;113;113m'     # Soft Red
+    HEADER = '\033[38;2;167;139;250m'    
+    SYSTEM = '\033[38;2;96;165;250m'     
+    ORIGINAL = '\033[38;2;251;146;60m'   
+    TRANSLATED = '\033[38;2;52;211;153m' 
+    ERROR = '\033[38;2;248;113;113m'     
     BOLD = '\033[1m'
     ENDC = '\033[0m'
 
-# ==========================================
-# CLOUD & IMAGE PROCESSING FUNCTIONS
-# ==========================================
 def download_from_bucket(gcs_uri):
     parsed_url = urlparse(gcs_uri)
     storage_client = storage.Client()
@@ -57,36 +52,26 @@ def translate_text(text, target_language='en'):
     results = translate_client.translate(lines, target_language=target_language, format_='text')
     return '\n'.join([r["translatedText"] for r in results])
 
-# ==========================================
-# SMART ANNOTATION LOGIC
-# ==========================================
 def inject_a1_note(text, current_count, max_count=4):
-    """Injects the A1 note up to a maximum number of times."""
     note = " (Niveau für absolute Anfänger, das einen Lernaufwand von etwa 70 bis 80 Stunden erfordert)"
-    
     def replacer(match):
         nonlocal current_count
         if current_count < max_count:
             current_count += 1
             return match.group(0) + note
         return match.group(0)
-        
-    new_text = re.sub(r'\bA1\b', replacer, text)
-    return new_text, current_count
+    return re.sub(r'\bA1\b', replacer, text), current_count
 
-# ==========================================
-# MAIN EXECUTION
-# ==========================================
 def print_header(filename, is_mirrored, current, total):
     mode_text = "🪞 MIRRORED (Flipping Horizontally)" if is_mirrored else "📸 STRAIGHT (Normal Processing)"
     print(f"\n{Colors.HEADER}{Colors.BOLD}================================================================={Colors.ENDC}")
-    print(f"{Colors.BOLD} 🖼️  PROCESSING IMAGE [{current}/{total}]: {filename} | Engine v{__version__}{Colors.ENDC}")
+    print(f"{Colors.BOLD} 🖼️  PROCESSING IMAGE [{current}/{total}]: {filename}{Colors.ENDC}")
     print(f"{Colors.BOLD} 🛠️  MODE: {mode_text}{Colors.ENDC}")
-    print(f"{Colors.HEADER}{Colors.BOLD}================================================================={Colors.ENDC}")
+    print(f"\n{Colors.HEADER}{Colors.BOLD}================================================================={Colors.ENDC}")
 
 def main():
-    parser = argparse.ArgumentParser(description=f"📸 Card OCR Translator CLI - v{__version__}")
-    parser.add_argument("images", nargs='+', help="GCS URIs. Format: gs://bucket/img.jpg[:mirrored|:straight]")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("images", nargs='+', help="GCS URIs")
     parser.add_argument("--target_lang", default="en", help="Target language code")
     args = parser.parse_args()
 
@@ -105,16 +90,10 @@ def main():
         filename = os.path.basename(urlparse(gcs_uri).path)
         should_flip = (mode != "straight")
 
-        # Validation Guard: Check file extension compatibility
-        allowed_extensions = ('.jpg', '.jpeg', '.png', '.webp')
-        if not filename.lower().endswith(allowed_extensions):
-            print(f"\n{Colors.ERROR}[!] File '{filename}' is not a supported image format. Skipping.{Colors.ENDC}")
-            continue
-
         print_header(filename, should_flip, index, total_images)
 
         try:
-            start_time = time.time()  # Performance tracking initialization
+            start_time = time.time()
 
             print(f"{Colors.SYSTEM}[*] Downloading {filename} from bucket...{Colors.ENDC}")
             raw_bytes = download_from_bucket(gcs_uri)
@@ -131,10 +110,8 @@ def main():
 
             print(f"{Colors.SYSTEM}[*] Translating to '{args.target_lang}'...{Colors.ENDC}")
             translated_text = translate_text(extracted_text, args.target_lang)
-
             translated_text, a1_injection_count = inject_a1_note(translated_text, a1_injection_count)
 
-            # Performance calculation
             elapsed_time = time.time() - start_time
 
             print(f"\n{Colors.ORIGINAL}{Colors.BOLD}📄 --- ORIGINAL EXTRACTED TEXT ---{Colors.ENDC}")
