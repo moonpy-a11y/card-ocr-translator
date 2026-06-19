@@ -44,3 +44,4 @@
 - Update step 44: Refactored system context for readme.
 - Update step 45: Refactored system context for config.
 - Update step 46: Refactored system context for config.
+- Update step 47: Refactored system context for i18n.
