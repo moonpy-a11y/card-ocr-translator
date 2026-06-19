@@ -3,7 +3,6 @@
 ## Technology Stack & Badges
 [![Google Cloud](https://img.shields.io/badge/GoogleCloud-%234285F4.svg?style=flat&logo=google-cloud&logoColor=white)](https://cloud.google.com/)
 [![AI-Gemini](https://img.shields.io/badge/AI-Gemini-orange?style=flat&logo=google-gemini&logoColor=white)](https://deepmind.google/technologies/gemini/)
-[![Framework-Agents](https://img.shields.io/badge/Framework-AI_Agents-green?style=flat)](https://github.com/google/adk)
 [![Environment-Dev](https://img.shields.io/badge/Environment-Dev_UI-blueviolet?style=flat)](https://adk.dev)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
