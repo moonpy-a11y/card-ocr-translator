@@ -7,3 +7,4 @@
 - Update step 7: Refactored system context for ui.
 - Update step 8: Refactored system context for logging.
 - Update step 9: Refactored system context for logging.
+- Update step 10: Refactored system context for logging.
