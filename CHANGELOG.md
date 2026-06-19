@@ -33,3 +33,4 @@
 - Update step 33: Refactored system context for readme.
 - Update step 34: Refactored system context for readme.
 - Update step 35: Refactored system context for ui.
+- Update step 36: Refactored system context for config.
