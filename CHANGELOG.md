@@ -27,3 +27,4 @@
 - Update step 27: Refactored system context for cli.
 - Update step 28: Refactored system context for readme.
 - Update step 29: Refactored system context for cli.
+- Update step 30: Refactored system context for i18n.
