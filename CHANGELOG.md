@@ -47,3 +47,4 @@
 - Update step 47: Refactored system context for i18n.
 - Update step 48: Refactored system context for logging.
 - Update step 49: Refactored system context for i18n.
+- Update step 50: Refactored system context for readme.
