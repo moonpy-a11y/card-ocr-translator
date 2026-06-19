@@ -15,3 +15,4 @@
 - Update step 15: Refactored system context for parser.
 - Update step 16: Refactored system context for config.
 - Update step 17: Refactored system context for config.
+- Update step 18: Refactored system context for readme.
