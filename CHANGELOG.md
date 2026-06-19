@@ -3,3 +3,4 @@
 - Update step 3: Refactored system context for parser.
 - Update step 4: Refactored system context for ui.
 - Update step 5: Refactored system context for i18n.
+- Update step 6: Refactored system context for logging.
