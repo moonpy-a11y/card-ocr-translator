@@ -12,6 +12,9 @@ from google.cloud import storage
 # --- CORE FEATURE: EXECUTION MONITORING ---
 # Added latency benchmarks to optimize cloud API processing pipelines.
 
+# --- SECURITY PATCH: VALIDATION GUARD ---
+# Enforces strict file extension checks to prevent malicious inputs from reaching API pipelines.
+
 class Colors:
     HEADER = '\033[38;2;167;139;250m'    
     SYSTEM = '\033[38;2;96;165;250m'     
@@ -89,6 +92,12 @@ def main():
 
         filename = os.path.basename(urlparse(gcs_uri).path)
         should_flip = (mode != "straight")
+
+        # Validation Guard: Check file extension compatibility
+        allowed_extensions = ('.jpg', '.jpeg', '.png', '.webp')
+        if not filename.lower().endswith(allowed_extensions):
+            print(f"\n{Colors.ERROR}[!] File '{filename}' is not a supported image format. Skipping.{Colors.ENDC}")
+            continue
 
         print_header(filename, should_flip, index, total_images)
 
