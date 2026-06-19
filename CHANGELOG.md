@@ -22,3 +22,4 @@
 - Update step 22: Refactored system context for logging.
 - Update step 23: Refactored system context for parser.
 - Update step 24: Refactored system context for logging.
+- Update step 25: Refactored system context for config.
